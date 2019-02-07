@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "BBC Coding Test - Implement Conway's Game of Life.",
   "main": "app/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/breakbeatkid/bbc-game-of-life.git"
+  },
   "scripts": {
     "start": "node app/main.js",
     "test": "mocha --watch"
