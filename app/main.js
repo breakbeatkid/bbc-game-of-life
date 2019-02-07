@@ -104,9 +104,9 @@ const promptForSeedCoord = async counter => {
 	do {
 		fail = true;
 		let qn =
-			"Enter row coord of seed point " +
+			"Enter row coord of alive cell " +
 			(counter + 1) +
-			" (0 <= row < rows, blank to stop): ";
+			" (0 <= row < " + rows + ", blank to stop): ";
 		await askQuestion(qn).then(answer => {
 			let r = parseInt(answer, 10);
 			if (answer == "" || (!isNaN(r) && r >= 0 && r < rows)) {
@@ -120,9 +120,9 @@ const promptForSeedCoord = async counter => {
 		do {
 			fail = true;
 			let qn =
-				"Enter col coord of seed point " +
+				"Enter col coord of alive cell " +
 				(counter + 1) +
-				" (0 <= col < cols, blank to stop): ";
+				" (0 <= col < " + cols + ", blank to stop): ";
 			await askQuestion(qn).then(answer => {
 				let c = parseInt(answer, 10);
 				if (answer == "" || (!isNaN(c) && c >= 0 && c < cols)) {
