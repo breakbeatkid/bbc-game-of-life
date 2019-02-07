@@ -1,0 +1,17 @@
+{
+  "name": "bbc-game-of-life",
+  "version": "0.0.1",
+  "description": "BBC Coding Test - Implement Conway's Game of Life.",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "node app/main.js",
+    "test": "mocha --watch"
+  },
+  "author": "Richard Easton",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "4.0.2",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {}
+}
