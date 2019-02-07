@@ -12,15 +12,15 @@ var livingCells = new Array();
 
 process.stdout.write("\x1Bc");
 
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
-
 const askQuestion = question => {
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	});
 	return new Promise((resolve, reject) => {
 		rl.question(question, answer => {
 			resolve(answer);
+			rl.close();
 		});
 	});
 };
@@ -106,7 +106,7 @@ const promptForSeedCoord = async counter => {
 		let qn =
 			"Enter row coord of seed point " +
 			(counter + 1) +
-			" (1 < row <= rows, blank to stop): ";
+			" (0 <= row < rows, blank to stop): ";
 		await askQuestion(qn).then(answer => {
 			let r = parseInt(answer, 10);
 			if (answer == "" || (!isNaN(r) && r >= 0 && r < rows)) {
@@ -122,7 +122,7 @@ const promptForSeedCoord = async counter => {
 			let qn =
 				"Enter col coord of seed point " +
 				(counter + 1) +
-				" (1 < col <= cols, blank to stop): ";
+				" (0 <= col < cols, blank to stop): ";
 			await askQuestion(qn).then(answer => {
 				let c = parseInt(answer, 10);
 				if (answer == "" || (!isNaN(c) && c >= 0 && c < cols)) {
@@ -142,7 +142,16 @@ const promptForSeedCoord = async counter => {
 const userInput = async () => {
 	await promptForConfig();
 	await promptForSeed();
-	rl.close();
+};
+
+const nextStep = async () => {
+	// let qn = "\n\nPress Enter for next gen\n'run' to automatically advance\n";
+	let qn = "\n";
+	let output = false;
+	await askQuestion(qn).then(answer => {
+		output = answer != "run" ? true : false;
+	});
+	return output;
 };
 
 const main = async () => {
@@ -151,9 +160,15 @@ const main = async () => {
 	let gameBoard = game(alive, dead, initSeedGrid, rows, cols);
 	gameBoard.showGrid();
 
-	setInterval(() => {
+	let stepped = true;
+	while (stepped) {
+		stepped = await nextStep();
 		gameBoard.takeStep();
-	}, 1500);
+	}
+	if (!stepped)
+		setInterval(() => {
+			gameBoard.takeStep();
+		}, 1000);
 };
 
 main();
