@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-This game was created for a coding aptitude test whilst applying for employment at the BBC. It is an rendition of the famous 'Game of Life' first proposed by the mathematician John Conway in 1970. It is implemented using Javascript in the node.js framework, using Chai and Mocha as a testing suite.
+This game was created for a coding aptitude test whilst applying for employment at the BBC. It is an rendition of the famous 'Game of Life' first proposed by the mathematician John Conway in 1970. Theoretically it is played on an infinite surface, which is achievable via code using such techniques as Gosper's algorithms, also known as 'Hashlife', utilising memoisation and quadtrees and would be the direction taken for future iterations. This implementation, however, is a brute-force approach.  It is implemented using Javascript in the node.js framework, using Chai and Mocha as a testing suite.
 
 ## Installing
 
@@ -140,7 +140,7 @@ BBC Task - Scenario 6
     $ Enter row coord of alive cell 4 (0 <= row < 200, blank to stop): _
 ```
 ## Interesting patterns
-Glider
+Glider:
 ```console
     $ Please enter integer number of rows (200 >= row > 0): 70
     $ Please enter integer number of columns (200 >= row > 0): 200
@@ -159,7 +159,7 @@ Glider
     $ Enter row coord of alive cell 6 (0 <= row < 200, blank to stop): _
 ```
 
-R-Pentomino
+R-Pentomino:
 ```console
     $ Please enter integer number of rows (200 >= row > 0): 70
     $ Please enter integer number of columns (200 >= row > 0): 200
