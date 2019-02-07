@@ -77,11 +77,6 @@ const promptForConfig = async () => {
 			}
 		});
 	} while (fail);
-
-	console.log(rows);
-	console.log(cols);
-	console.log(alive);
-	console.log(dead);
 };
 
 const promptForSeed = async () => {
