@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-This game was created for a coding aptitude test whilst applying for employment at the BBC. It is an rendition of the famous 'Game of Life' first proposed by the mathematician John Conway in 1970. Theoretically it is played on an infinite surface, which is achievable via code using such techniques as Gosper's algorithms, also known as 'Hashlife', utilising memoisation and quadtrees and would be the direction taken for future iterations. This implementation, however, is a brute-force approach, written in Javascript for  node.js framework, using Chai and Mocha as a testing suite.
+This game was created for a coding aptitude test whilst applying for employment at the BBC. It is an rendition of the famous 'Game of Life' first proposed by the mathematician John Conway in 1970. Theoretically it is played on an infinite surface, which is achievable via code using such a technique as Gosper's algorithms, also known as 'Hashlife', utilising memoisation and quadtrees and would be the direction taken for future iterations. This implementation, however, is a brute-force approach, written in Javascript for  node.js framework, using Chai and Mocha as a testing suite.
 
 ## Installing
 
