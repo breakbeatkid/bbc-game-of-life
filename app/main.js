@@ -6,6 +6,7 @@ const game = require("./game");
 
 var rows = null;
 var cols = null;
+
 var dead = null;
 var alive = null;
 var livingCells = new Array();
@@ -90,49 +91,72 @@ const promptForSeed = async () => {
 			col: coord.col
 		};
 
-		if (!(rc.row == "" || rc.col == "")) {
+		if (rc.row !== "" && rc.col !== "") {
 			livingCells.push(rc);
 			counter++;
 		}
-	} while (rc.row != "" && rc.col != "");
+	} while (rc.row !== "" && rc.col !== "");
 };
 
 const promptForSeedCoord = async counter => {
 	var row = null;
 	var col = null;
-
+	let fail;
 	do {
 		fail = true;
 		let qn =
 			"Enter row coord of alive cell " +
 			(counter + 1) +
-			" (0 <= row < " + rows + ", blank to stop): ";
+			" (0 <= row < " +
+			rows +
+			", blank to stop): ";
 		await askQuestion(qn).then(answer => {
-			let r = parseInt(answer, 10);
-			if (answer == "" || (!isNaN(r) && r >= 0 && r < rows)) {
-				row = answer == "" ? answer : r;
+			if (answer === "0") {
+				row = parseInt(0, 10);
 				fail = false;
+			} else if (answer === "") {
+				row = "";
+				fail = false;
+			} else if (isNaN(answer)) {
+				fail = true;
+			} else {
+				let r = parseInt(answer, 10);
+				if (r >= 0 && r < rows) {
+					row = r;
+					fail = false;
+				}
 			}
 		});
-	} while (fail);
+	} while (fail == true);
 
-	if (row != "") {
+	if (row !== "") {
 		do {
 			fail = true;
 			let qn =
 				"Enter col coord of alive cell " +
 				(counter + 1) +
-				" (0 <= col < " + cols + ", blank to stop): ";
+				" (0 <= col < " +
+				rows +
+				", blank to stop): ";
 			await askQuestion(qn).then(answer => {
-				let c = parseInt(answer, 10);
-				if (answer == "" || (!isNaN(c) && c >= 0 && c < cols)) {
-					col = answer == "" ? answer : c;
+				if (answer === "0") {
+					col = parseInt(0, 10);
 					fail = false;
+				} else if (answer === "") {
+					row = "";
+					fail = false;
+				} else if (isNaN(answer)) {
+					fail = true;
+				} else {
+					let c = parseInt(answer, 10);
+					if (c >= 0 && c < cols) {
+						col = c;
+						fail = false;
+					}
 				}
 			});
-		} while (fail);
+		} while (fail == true);
 	}
-
 	return {
 		row: row,
 		col: col
@@ -145,7 +169,6 @@ const userInput = async () => {
 };
 
 const nextStep = async () => {
-	// let qn = "\n\nPress Enter for next gen\n'run' to automatically advance\n";
 	let qn = "\n";
 	let output = false;
 	await askQuestion(qn).then(answer => {
