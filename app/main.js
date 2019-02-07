@@ -168,7 +168,7 @@ const main = async () => {
 	if (!stepped)
 		setInterval(() => {
 			gameBoard.takeStep();
-		}, 1000);
+		}, 100);
 };
 
 main();
