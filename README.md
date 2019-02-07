@@ -116,7 +116,7 @@ Typing 'run' then pressing enter will automatically advance game a generation at
 
 
 ## Task scenarios
-Scenario 5
+BBC Task - Scenario 5
 ```console
     $ Please enter integer number of rows (200 >= row > 0): 11
     $ Please enter integer number of columns (200 >= row > 0): 11
@@ -125,7 +125,7 @@ Scenario 5
     $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): _
 ```
 
-Scenario 6
+BBC Task - Scenario 6
 ```console
     $ Please enter integer number of rows (200 >= row > 0): 11
     $ Please enter integer number of columns (200 >= row > 0): 11
