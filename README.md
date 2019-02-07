@@ -24,3 +24,100 @@ In order to ensure the desired functionality, thereby increasing maintainability
 ```console
     $ npm test
 ```
+
+## Running the game
+
+To run the game, enter the following command at the command line interface and you will be prompted to enter certain configuration data:
+
+```console
+    $ npm start
+```
+
+## Configuration
+The game prompts the user to set certain parameters before the game commences. First, the dimensions of the grid must be set.
+
+```console
+    $ Please enter integer number of rows (200 >= row > 0): 70
+    $ Please enter integer number of columns (200 >= row > 0): 200
+    $ _
+```
+Next the characters displayed in the grid must be set. One for alive cells, one for dead cells.
+
+```console
+    $ Please input the symbol for an alive cell: o
+    $ Please input the symbol for a dead cell: .
+    $ _
+```
+Finally a set of coordinates are required. These coordinates populate the list of alive cells used when building the initial seed grid.
+
+```console
+    $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): 1
+    $ Enter col coord of alive cell 1 (0 <= col < 70,  blank to stop): 4
+    $ _
+```
+## Playing the game
+
+How to play goes here
+
+## Task scenarios
+Scenario 5
+```console
+    $ Please enter integer number of rows (200 >= row > 0): 11
+    $ Please enter integer number of columns (200 >= row > 0): 11
+    $ Please input the symbol for an alive cell: o
+    $ Please input the symbol for a dead cell: .
+    $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): _
+```
+
+Scenario 6
+```console
+    $ Please enter integer number of rows (200 >= row > 0): 11
+    $ Please enter integer number of columns (200 >= row > 0): 11
+    $ Please input the symbol for an alive cell: o
+    $ Please input the symbol for a dead cell: .
+    $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): 4
+    $ Enter col coord of alive cell 1 (0 <= col < 70,  blank to stop): 5
+    $ Enter row coord of alive cell 2 (0 <= row < 200, blank to stop): 5
+    $ Enter col coord of alive cell 2 (0 <= col < 70,  blank to stop): 5
+    $ Enter row coord of alive cell 3 (0 <= row < 200, blank to stop): 6
+    $ Enter col coord of alive cell 3 (0 <= col < 70,  blank to stop): 5
+    $ Enter row coord of alive cell 4 (0 <= row < 200, blank to stop): _
+```
+## Interesting patterns
+Glider
+```console
+    $ Please enter integer number of rows (200 >= row > 0): 70
+    $ Please enter integer number of columns (200 >= row > 0): 200
+    $ Please input the symbol for an alive cell: o
+    $ Please input the symbol for a dead cell: .
+    $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): 1
+    $ Enter col coord of alive cell 1 (0 <= col < 70,  blank to stop): 4
+    $ Enter row coord of alive cell 2 (0 <= row < 200, blank to stop): 2
+    $ Enter col coord of alive cell 2 (0 <= col < 70,  blank to stop): 4
+    $ Enter row coord of alive cell 3 (0 <= row < 200, blank to stop): 3
+    $ Enter col coord of alive cell 3 (0 <= col < 70,  blank to stop): 4
+    $ Enter row coord of alive cell 4 (0 <= row < 200, blank to stop): 3
+    $ Enter col coord of alive cell 4 (0 <= col < 70,  blank to stop): 3
+    $ Enter row coord of alive cell 5 (0 <= row < 200, blank to stop): 2
+    $ Enter col coord of alive cell 5 (0 <= col < 70,  blank to stop): 2
+    $ Enter row coord of alive cell 6 (0 <= row < 200, blank to stop): _
+```
+
+R-Pentomino
+```console
+    $ Please enter integer number of rows (200 >= row > 0): 70
+    $ Please enter integer number of columns (200 >= row > 0): 200
+    $ Please input the symbol for an alive cell: o
+    $ Please input the symbol for a dead cell: .
+    $ Enter row coord of alive cell 1 (0 <= row < 200, blank to stop): 31
+    $ Enter col coord of alive cell 1 (0 <= col < 70,  blank to stop): 74
+    $ Enter row coord of alive cell 2 (0 <= row < 200, blank to stop): 32
+    $ Enter col coord of alive cell 2 (0 <= col < 70,  blank to stop): 74
+    $ Enter row coord of alive cell 3 (0 <= row < 200, blank to stop): 30
+    $ Enter col coord of alive cell 3 (0 <= col < 70,  blank to stop): 75
+    $ Enter row coord of alive cell 4 (0 <= row < 200, blank to stop): 31
+    $ Enter col coord of alive cell 4 (0 <= col < 70,  blank to stop): 75
+    $ Enter row coord of alive cell 5 (0 <= row < 200, blank to stop): 31
+    $ Enter col coord of alive cell 5 (0 <= col < 70,  blank to stop): 76
+    $ Enter row coord of alive cell 6 (0 <= row < 200, blank to stop): _
+```
