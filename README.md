@@ -4,7 +4,7 @@ This game was created for a coding aptitude test whilst applying for employment 
 
 ## Installing
 
-To install and run, open a command line interface, navigate to the desired workspace and clone this repository there.
+To install, open a command line interface, navigate to the desired workspace and clone this repository there.
 
 ```console
     $ cd /path/to/workspace
