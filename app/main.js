@@ -1,14 +1,17 @@
 ("use strict");
-
 const readline = require("readline");
 const initGrid = require("./initialiseGrid");
 const game = require("./game");
+
+const MAX_VAL = 200;
+const MIN_VAL = 0;
 
 var rows = null;
 var cols = null;
 
 var dead = null;
 var alive = null;
+
 var livingCells = new Array();
 
 process.stdout.write("\x1Bc");
@@ -26,61 +29,63 @@ const askQuestion = question => {
 	});
 };
 
-const promptForConfig = async () => {
-	var fail;
-
-	do {
-		fail = true;
-		let qn = "Please enter integer number of rows (200 >= row > 0): ";
+const inputDimension = async qn => {
+	var output;
+	var fail = true;
+	while (fail) {
 		await askQuestion(qn).then(answer => {
-			let r = parseInt(answer, 10);
-
-			if (!isNaN(r) && r > 0 && r <= 200) {
-				rows = r;
+			output = parseInt(answer, 10);
+			if (!isNaN(output) && output > MIN_VAL && output <= MAX_VAL)
 				fail = false;
-			}
 		});
-	} while (fail);
-
-	do {
-		fail = true;
-		let qn = "Please enter integer number of cols (200 >= row > 0): ";
-		await askQuestion(qn).then(answer => {
-			let c = parseInt(answer, 10);
-
-			if (!isNaN(c) && c > 0 && c <= 200) {
-				cols = c;
-				fail = false;
-			}
-		});
-	} while (fail);
-
-	do {
-		fail = true;
-		let qn = "Please input the symbol for an alive cell: ";
-		await askQuestion(qn).then(answer => {
-			let a = answer;
-			if (a != "") {
-				alive = a.charAt(0);
-				fail = false;
-			}
-		});
-	} while (fail);
-
-	do {
-		fail = true;
-		let qn = "Please input the symbol for a dead cell: ";
-		await askQuestion(qn).then(answer => {
-			let d = answer;
-			if (d != "") {
-				dead = d.charAt(0);
-				fail = false;
-			}
-		});
-	} while (fail);
+	}
+	return output;
 };
 
-const promptForSeed = async () => {
+const inputSymbol = async qn => {
+	var output;
+	var fail = true;
+	while (fail) {
+		await askQuestion(qn).then(answer => {
+			output = answer.charAt(0);
+			if (answer != "") fail = false;
+		});
+	}
+	return output;
+};
+
+const inputCoord = async qn => {
+	var output;
+	var fail = true;
+	while (fail) {
+		await askQuestion(qn).then(answer => {
+			if (answer === "0") {
+				output = parseInt(0, 10);
+				fail = false;
+			} else if (answer === "") {
+				output = "";
+				fail = false;
+			} else if (isNaN(answer)) {
+				fail = true;
+			} else {
+				output = parseInt(answer, 10);
+				if (output >= 0 && output < rows) {
+					fail = false;
+				}
+			}
+		});
+	}
+	return output;
+};
+
+const promptUserForConfig = async () => {
+	rows = await inputDimension("Please enter number of rows (0<row<=200): ");
+	cols = await inputDimension("Please enter number of cols (0<col<=200): ");
+	alive = await inputSymbol("Please input the symbol for an alive cell: ");
+	dead = await inputSymbol("Please input the symbol for a dead cell: ");
+};
+
+const promptUserForSeed = async () => {
 	var counter = 0;
 	var rc;
 
@@ -99,63 +104,16 @@ const promptForSeed = async () => {
 };
 
 const promptForSeedCoord = async counter => {
-	var row = null;
-	var col = null;
-	let fail;
-	do {
-		fail = true;
-		let qn =
-			"Enter row coord of alive cell " +
-			(counter + 1) +
-			" (0 <= row < " +
-			rows +
-			", blank to stop): ";
-		await askQuestion(qn).then(answer => {
-			if (answer === "0") {
-				row = parseInt(0, 10);
-				fail = false;
-			} else if (answer === "") {
-				row = "";
-				fail = false;
-			} else if (isNaN(answer)) {
-				fail = true;
-			} else {
-				let r = parseInt(answer, 10);
-				if (r >= 0 && r < rows) {
-					row = r;
-					fail = false;
-				}
-			}
-		});
-	} while (fail == true);
+	var row = await inputCoord(
+		`Enter row coord of alive cell ${counter +
+			1} (0<=row<${rows}, blank to stop): `
+	);
 
 	if (row !== "") {
-		do {
-			fail = true;
-			let qn =
-				"Enter col coord of alive cell " +
-				(counter + 1) +
-				" (0 <= col < " +
-				rows +
-				", blank to stop): ";
-			await askQuestion(qn).then(answer => {
-				if (answer === "0") {
-					col = parseInt(0, 10);
-					fail = false;
-				} else if (answer === "") {
-					row = "";
-					fail = false;
-				} else if (isNaN(answer)) {
-					fail = true;
-				} else {
-					let c = parseInt(answer, 10);
-					if (c >= 0 && c < cols) {
-						col = c;
-						fail = false;
-					}
-				}
-			});
-		} while (fail == true);
+		var col = await inputCoord(
+			`Enter col coord of alive cell ${counter +
+				1} (0<=row<${cols}, blank to stop): `
+		);
 	}
 	return {
 		row: row,
@@ -164,11 +122,15 @@ const promptForSeedCoord = async counter => {
 };
 
 const userInput = async () => {
-	await promptForConfig();
-	await promptForSeed();
+	//Pause and wait for user to finish entering config parameter
+	await promptUserForConfig();
+
+	//Pause and wait for user to finish entering seed grid
+	await promptUserForSeed();
 };
 
 const nextStep = async () => {
+	//Check for either enter or 'run' input from user to determine next step
 	let qn = "\n";
 	let output = false;
 	await askQuestion(qn).then(answer => {
@@ -178,20 +140,29 @@ const nextStep = async () => {
 };
 
 const main = async () => {
+	//Populate variables by user input
 	await userInput();
+
+	//Initialise a seeded game grid using user parameters
 	let initSeedGrid = initGrid(rows, cols, alive, dead, livingCells);
+
+	//Using the seeded game grid, create a game
 	let gameBoard = game(alive, dead, initSeedGrid, rows, cols);
+
+	//Display the initial state of the game grid
 	gameBoard.showGrid();
 
+	//Stepped game logic loop
 	let stepped = true;
 	while (stepped) {
 		stepped = await nextStep();
 		gameBoard.takeStep();
 	}
-	if (!stepped)
-		setInterval(() => {
-			gameBoard.takeStep();
-		}, 100);
+
+	//Running game logic loop
+	setInterval(() => {
+		gameBoard.takeStep();
+	}, 100);
 };
 
 main();
